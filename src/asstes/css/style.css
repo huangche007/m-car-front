@@ -126,7 +126,14 @@ article .art-content{}
 
 .post:after, .post:before{clear: both; content: '\0020'; display: block; visibility: hidden; width: 0; height: 0;}
 .post img{float: left; margin: 15px 10px; width: 100px;}
-.post .wrapper {vertical-align: middle;text-align: left;line-height: 1.4em;padding-bottom: 7px;margin-top: 20px;display: inline-block;}
+.post .wrapper {vertical-align: middle;text-align: left;line-height: 1.4em;padding-bottom: 7px;margin-top: 20px;display: inline-block;
+ 
+  }
+  .post .wrapper a{
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
 .post .wrapper span{font-size: 17px; line-height: 3;}
 
 /* ---------------------------------------------------------------------------- */
@@ -183,6 +190,12 @@ a.button.bt2 {background: #0000ff;color: #ffffff;}
 	margin-top: 30px;
 	padding-bottom: 20px;
 }
+.item .item-info h3{
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  padding: 0 10px;
+}
 .item .item-info a{color:#444;}
 .item .item-container {
 	vertical-align: middle;
@@ -200,7 +213,7 @@ a.button.bt2 {background: #0000ff;color: #ffffff;}
 .item .item-container img {
 	display: block;
 	width: 100%;
-	height: auto;
+	height: 200px;
 
 }
 .item .item-container .item-caption {

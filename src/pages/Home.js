@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import fetchJson from '../utils/fetch'
 import {BASE_UPLOAD} from '../utils/config'
+import {Link} from 'react-router-dom'
 class Home extends Component {
     constructor(){
         super();
@@ -8,7 +9,9 @@ class Home extends Component {
             banners:[],
             currentPage:1,
             latesCars:[],
-            showMore:true
+            showMore:true,
+            chosenCar:[],
+            newestCar:[]
         }
     }
 
@@ -16,9 +19,13 @@ class Home extends Component {
         const banners = await fetchJson('api/banner')
         
         const cars = await fetchJson(`api/carlist/${this.state.currentPage}`)
+        const chosenCar = await fetchJson('api/chosencar');
+        const newestCar = await fetchJson('api/latestcar');
         this.setState({
             banners,
-            latesCars:cars
+            latesCars:cars,
+            chosenCar,
+            newestCar
         })
     }
 
@@ -36,6 +43,15 @@ class Home extends Component {
                 latesCars:[...this.state.latesCars,...cars]
             })
         }
+    }
+
+    mapArr(arr,n,fn){
+        let result = []
+        for(let i=0;i<arr.length;i+=n){
+            let smArr = fn(arr.slice(i,i+n));
+            result = result.concat(smArr);
+        }
+        return result
     }
 
     render() {
@@ -132,132 +148,36 @@ class Home extends Component {
                                     <h2>精选好车</h2>
                                 </div>
                                 <div className="row">
-                                    <div className="col-1-3">
-                                        <div className="wrap-col">
-
-
-                                            <div className="item t-center">
-                                                <div className="item-container">
-                                                    <a href="single.html">
-                                                        <div className="item-caption">
-                                                            <div className="item-caption-inner">
-                                                                <div className="item-caption-inner1">
-                                                                    <span>2006 / 32,000 km / 250马力 / 自动挡 /  跑车</span>
+                                   {
+                                       this.mapArr(this.state.chosenCar,2,arr => (
+                                            <div className="col-1-3">
+                                                <div className="wrap-col">
+                                                    {
+                                                        arr.map((iCar,iIndex) => (
+                                                            <div className="item t-center" key={iCar.ID}>
+                                                                <div className="item-container">
+                                                                    <Link to={'/cardetail/'+iCar.ID}>
+                                                                        <div className="item-caption">
+                                                                            <div className="item-caption-inner">
+                                                                                <div className="item-caption-inner1">
+                                                                                    <span>{iCar.purchase_time} / {iCar.distance} / {iCar.mileage} / {iCar.shift}</span>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <img src={BASE_UPLOAD+iCar.images[0]} />
+                                                                    </Link>
+                                                                </div>
+                                                                <div className="item-info">
+                                                                    <Link to={'/cardetail/'+iCar.ID}><h3>{iCar.title}</h3></Link>
+                                                                    <p>{iCar.distance} ￥{(iCar.price/10000).toFixed(1)}万</p>
                                                                 </div>
                                                             </div>
-                                                        </div>
-                                                        <img src="images/car1.jpg" />
-                                                    </a>
-                                                </div>
-                                                <div className="item-info">
-                                                    <a href="single.html"><h3>阿斯顿·马丁</h3></a>
-                                                    <p>3万公里 ￥52万</p>
+                                                        ))
+                                                    }
                                                 </div>
                                             </div>
-
-
-                                            <div className="item t-center">
-                                                <div className="item-container">
-                                                    <a href="single.html">
-                                                        <div className="item-caption">
-                                                            <div className="item-caption-inner">
-                                                                <div className="item-caption-inner1">
-                                                                    <span>2006 / 32,000 km / 250马力 / 自动挡 /  跑车</span>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <img src="images/car1.jpg" />
-                                                    </a>
-                                                </div>
-                                                <div className="item-info">
-                                                    <a href="single.html"><h3>阿斯顿·马丁</h3></a>
-                                                    <p>3万公里 ￥52万</p>
-                                                </div>
-                                            </div>
-
-
-                                        </div>
-                                    </div>
-                                    <div className="col-1-3">
-                                        <div className="wrap-col">
-                                            <div className="item t-center">
-                                                <div className="item-container">
-                                                    <a href="single.html">
-                                                        <div className="item-caption">
-                                                            <div className="item-caption-inner">
-                                                                <div className="item-caption-inner1">
-                                                                    <span>2006 / 32,000 km / 250马力 / 自动挡 /  跑车</span>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <img src="images/car1.jpg" />
-                                                    </a>
-                                                </div>
-                                                <div className="item-info">
-                                                    <a href="single.html"><h3>阿斯顿·马丁</h3></a>
-                                                    <p>3万公里 ￥52万</p>
-                                                </div>
-                                            </div>
-                                            <div className="item t-center">
-                                                <div className="item-container">
-                                                    <a href="single.html">
-                                                        <div className="item-caption">
-                                                            <div className="item-caption-inner">
-                                                                <div className="item-caption-inner1">
-                                                                    <span>2006 / 32,000 km / 250马力 / 自动挡 /  跑车</span>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <img src="images/car1.jpg" />
-                                                    </a>
-                                                </div>
-                                                <div className="item-info">
-                                                    <a href="single.html"><h3>阿斯顿·马丁</h3></a>
-                                                    <p>3万公里 ￥52万</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="col-1-3">
-                                        <div className="wrap-col">
-                                            <div className="item t-center">
-                                                <div className="item-container">
-                                                    <a href="single.html">
-                                                        <div className="item-caption">
-                                                            <div className="item-caption-inner">
-                                                                <div className="item-caption-inner1">
-                                                                    <span>2006 / 32,000 km / 250马力 / 自动挡 /  跑车</span>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <img src="images/car1.jpg" />
-                                                    </a>
-                                                </div>
-                                                <div className="item-info">
-                                                    <a href="single.html"><h3>阿斯顿·马丁</h3></a>
-                                                    <p>3万公里 ￥52万</p>
-                                                </div>
-                                            </div>
-                                            <div className="item t-center">
-                                                <div className="item-container">
-                                                    <a href="single.html">
-                                                        <div className="item-caption">
-                                                            <div className="item-caption-inner">
-                                                                <div className="item-caption-inner1">
-                                                                    <span>2006 / 32,000 km / 250马力 / 自动挡 /  跑车</span>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <img src="images/car1.jpg" />
-                                                    </a>
-                                                </div>
-                                                <div className="item-info">
-                                                    <a href="single.html"><h3>阿斯顿·马丁</h3></a>
-                                                    <p>3万公里 ￥52万</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+                                       ))
+                                    }
                                 </div>
                             </div>
                         </div>
@@ -289,7 +209,7 @@ class Home extends Component {
                                                         <div className="item">
                                                             <div className="col-1-3">
                                                                 <div className="item-container">
-                                                                    <a href="single.html">
+                                                                    <Link to={'/cardetail/'+car.ID}>
                                                                         <div className="item-caption">
                                                                             <div className="item-caption-inner">
                                                                                 <div className="item-caption-inner1">
@@ -298,13 +218,13 @@ class Home extends Component {
                                                                             </div>
                                                                         </div>
                                                                         <img src={BASE_UPLOAD+car.images[0]} />
-                                                                    </a>
+                                                                    </Link>
                                                                 </div>
                                                             </div>
                                                             <div className="col-2-3">
                                                                 <div className="wrap-col">
                                                                     <div className="item-info">
-                                                                        <a href="single.html"><h3>{car.title}</h3></a>
+                                                                        <Link to={'/cardetail/'+car.ID}><h3>{car.title}</h3></Link>
                                                                         <p>{car.distance} ￥{(car.price/10000).toFixed(1)}万</p>
                                                                         <p>{car.description}</p>
                                                                     </div>
@@ -341,29 +261,17 @@ class Home extends Component {
                                                     <h5>最新上架</h5>
                                                 </div>
                                                 <div className="wid-content">
-
-                                                    <div className="post">
-                                                        <a href="#"><img src="images/car8.jpg"/></a>
-                                                        <div className="wrapper">
-                                                        <h5><a href="#">兰博基尼</a></h5>
-                                                        <span>83.5万</span>
-                                                        </div>
-                                                    </div>
-
-                                                    <div className="post">
-                                                        <a href="#"><img src="images/car8.jpg"/></a>
-                                                        <div className="wrapper">
-                                                        <h5><a href="#">兰博基尼</a></h5>
-                                                        <span>83.5万</span>
-                                                        </div>
-                                                    </div>
-                                                    <div className="post">
-                                                        <a href="#"><img src="images/car8.jpg"/></a>
-                                                        <div className="wrapper">
-                                                        <h5><a href="#">兰博基尼</a></h5>
-                                                        <span>83.5万</span>
-                                                        </div>
-                                                    </div>
+                                                    {
+                                                        this.state.newestCar.map((car) => (
+                                                            <div className="post" key={car.ID}>
+                                                                <Link to={'/cardetail/'+car.ID}><img src={BASE_UPLOAD+car.images[0]}/></Link>
+                                                                <div className="wrapper">
+                                                                    <h5><Link to={'cardetail/'+car.ID}>{car.title}</Link></h5>
+                                                                    <span>{(car.price/10000).toFixed(1)}万</span>
+                                                                </div>
+                                                            </div>
+                                                        ))
+                                                    }
                                                 </div>
                                             </div>
                                     

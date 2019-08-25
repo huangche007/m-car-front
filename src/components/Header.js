@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import logoImg from '../asstes/images/logo.png'
+import {Link} from 'react-router-dom'
 class Header extends Component {
     render() {
         return (
@@ -8,12 +9,12 @@ class Header extends Component {
                     <div className="row">
                         <div className="cssmenu">
                             <ul>
-                            <li className='active'><a href="index.html">首页</a></li>
-                            <li><a href="single.html">选车</a></li>
-                            <li><a href="contact.html">联系方式</a></li>
+                                <li className='active'><Link to="/">首页</Link></li>
+                                <li><Link to="/">选车</Link></li>
+                                <li><Link to="/contact">联系方式</Link></li>
                             </ul>
                         </div>
-                        <a href='index.html' className="logo"><img src={logoImg} /></a>
+                        <Link to="/" className="logo"><img src={logoImg} /></Link>
                     </div>
                 </div>
             </header>
