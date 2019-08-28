@@ -1,6 +1,21 @@
 import React, { Component } from 'react';
-
+import fetchJson from '../utils/fetch'
 class Contact extends Component {
+    constructor(){
+        super();
+
+    }
+
+    async submitInfo(){
+        let feedBackFromData = new FormData(this.refs.feedBack);
+        await fetchJson('api/msg',{
+            method:'POST',
+            body:feedBackFromData
+        })
+        alert('留言成功，客服会尽快联系您');
+    }
+
+
     render() {
         return (
             <section id="container">
@@ -20,7 +35,7 @@ class Contact extends Component {
                                                 <h5>留言建议</h5>
                                             </div>
                                             <div id="contact_form">
-                                                <form name="form1" className="ff">
+                                                <form name="form1" className="ff" ref="feedBack">
                                                     <label className="row">
                                                         <div className="col-1-2">
                                                             <div className="wrap-col">
@@ -35,15 +50,15 @@ class Contact extends Component {
                                                     </label>
                                                     <label className="row">
                                                         <div className="wrap-col">
-                                                            <input type="text" name="subject" placeholder="留言标题" required="required" />
+                                                            <input type="text" name="title" placeholder="留言标题" required="required" />
                                                         </div>
                                                     </label>
                                                     <label className="row">
                                                         <div className="wrap-col">
-                                                            <textarea name="msg" className="form-control" rows="4" cols="25" required placeholder="留言内容"></textarea>
+                                                            <textarea name="content" className="form-control" rows="4" cols="25" required placeholder="留言内容"></textarea>
                                                         </div>
                                                     </label>
-                                                    <center><input className="sendButton" type="submit" name="Submit" value="提交" /></center>
+                                                    <center><input className="sendButton" type="button" name="Submit" value="提交" onClick={this.submitInfo.bind(this)}/></center>
                                                 </form>
                                             </div>
                                         </div>
