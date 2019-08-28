@@ -134,6 +134,12 @@ article .art-content{}
     white-space: nowrap;
     text-overflow: ellipsis;
   }
+  .post .wrapper .latest-car-name{
+    overflow: hidden;
+    max-width: 150px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
 .post .wrapper span{font-size: 17px; line-height: 3;}
 
 /* ---------------------------------------------------------------------------- */

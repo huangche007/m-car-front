@@ -266,7 +266,7 @@ class Home extends Component {
                                                             <div className="post" key={car.ID}>
                                                                 <Link to={'/cardetail/'+car.ID}><img src={BASE_UPLOAD+car.images[0]}/></Link>
                                                                 <div className="wrapper">
-                                                                    <h5><Link to={'cardetail/'+car.ID}>{car.title}</Link></h5>
+                                                                    <h5 className="latest-car-name"><Link to={'cardetail/'+car.ID}>{car.title}</Link></h5>
                                                                     <span>{(car.price/10000).toFixed(1)}万</span>
                                                                 </div>
                                                             </div>
